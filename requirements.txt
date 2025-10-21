@@ -4,3 +4,4 @@ seaborn==0.13.2
 streamlit==1.43.1
 joblib
 gdown
+scikit-learn
