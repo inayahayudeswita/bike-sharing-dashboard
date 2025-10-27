@@ -36,7 +36,7 @@ def load_models():
     model_day_path = os.path.join(BASE_DIR, "randomforest_day_model.pkl")
     model_hour_path = os.path.join(BASE_DIR, "randomforest_hour_model.pkl")
 
-    # Link Google Drive (pakai ID file)
+    # Link Google Drive (pakai ID file)o
     drive_links = {
         "day": "https://drive.google.com/uc?id=1NICH_ZupZUZM5qCiH5xNXdO6Aab_y0f6",  # day
         "hour": "https://drive.google.com/uc?id=16SUe6L6Pof4gr9O1gBRDpFJq44hSmtTK"  # hour
