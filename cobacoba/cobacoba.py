@@ -50,7 +50,7 @@ st.markdown("""
 # -------------------------
 # Constants
 # -------------------------
-DATA_URL = "https://raw.githubusercontent.com/inayahayudeswita/bike-sharing-dashboard/main/dashboard/main_data.csv"
+DATA_URL = "https://raw.githubusercontent.com/inayahayudeswita/bike-sharing-dashboard/main/data/main_data.csv"
 
 # -------------------------
 # Helpers
