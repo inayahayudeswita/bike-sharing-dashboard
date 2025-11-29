@@ -386,7 +386,7 @@ class BikeSharingDashboard:
                 with st.spinner("Making prediction..."):
                     # Preprocess input
                     input_df, display_info = self.preprocess_input(input_data, dataset_type)
-                    
+                        
                     if input_df is not None:
                         # Debug info
                         st.write(f"📊 Using {dataset_type} model")
