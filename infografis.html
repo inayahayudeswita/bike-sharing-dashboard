@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Life Cycle Use Case — Sfgiandra</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F8F5EC; /* Beige soft */
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow: hidden; /* Prevent scroll if content slightly overflows */
+            position: relative;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2em;
+            color: #5D4037; /* Dusty Brown */
+            font-weight: bold;
+        }
+
+        .title-section {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5em; /* Large size for main title */
+            color: #5D4037; /* Charcoal/Dusty Brown */
+            margin: 0;
+        }
+
+        .flow-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align items to the start of their cross axis */
+            gap: 20px; /* Space between steps */
+            padding: 0 50px;
+            box-sizing: border-box;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            position: relative;
+            margin-top: 30px;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            flex-basis: calc(100% / 7 - 20px); /* Distribute evenly, adjust for gap */
+            min-width: 120px; /* Minimum width for each step */
+        }
+
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .icon-circle img {
+            width: 45px;
+            height: 45px;
+            filter: invert(1); /* Adjust icon color if needed */
+        }
+
+        /* Specific icon colors */
+        .step:nth-child(1) .icon-circle { background-color: #C0D8E4; /* Sky Blue */ }
+        .step:nth-child(2) .icon-circle { background-color: #E2B9B3; /* Deep Berry/Rose */ }
+        .step:nth-child(3) .icon-circle { background-color: #F7E9B9; /* Cream/Yellow */ }
+        .step:nth-child(4) .icon-circle { background-color: #E2C0B3; /* Terracotta */ }
+        .step:nth-child(5) .icon-circle { background-color: #B9E2C0; /* Soft Green */ }
+        .step:nth-child(6) .icon-circle { background-color: #D8B9E2; /* Lavender */ }
+        .step:nth-child(7) .icon-circle { background-color: #E6E6FA; /* Light Grey/Lavender */ }
+
+
+        .step-label {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+            color: #5D4037; /* Dusty Brown */
+        }
+
+        .step-description {
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 0.9em;
+            line-height: 1.4;
+            color: #5D4037; /* Dusty Brown */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            max-width: 150px; /* Max width for description box */
+        }
+
+        /* Arrows between steps */
+        .arrow {
+            position: absolute;
+            top: 105px; /* Adjust based on icon circle height + margin */
+            height: 2px;
+            background: linear-gradient(to right, #B8860B, #DAA520); /* Gold gradient */
+            opacity: 0.8;
+            z-index: -1; /* Place behind steps */
+        }
+
+        /* Dynamic arrow positioning */
+        /* This would typically be handled with JavaScript or more complex CSS for a perfect curved flow.
+           For simplicity in pure CSS, we can use straight lines between calculated positions.
+           Alternatively, use SVG for curved arrows. */
+
+        /* A more practical approach for straight arrows between flex items: */
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: -25px; /* Half the gap + half the arrow width */
+            top: 50px; /* Vertically center with icon-circle */
+            width: 50px; /* Arrow length */
+            height: 2px;
+            background: linear-gradient(to right, #B8860B, #DAA520); /* Gold gradient */
+            opacity: 0.8;
+            z-index: 0;
+            transform: translateY(-50%);
+        }
+
+        .step:not(:last-child)::before {
+            content: '';
+            position: absolute;
+            right: -20px; /* Position of the arrowhead start */
+            top: 50px;
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 8px solid #DAA520; /* Arrowhead color */
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+
+
+        .footer {
+            margin-top: auto; /* Push to the bottom */
+            padding: 40px 50px;
+            text-align: center;
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .tagline {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6em;
+            font-style: italic;
+            color: #5D4037; /* Dusty Brown */
+            margin-bottom: 20px;
+        }
+
+        .product-illustration {
+            position: absolute;
+            bottom: 30px;
+            right: 50px;
+            width: 150px; /* Size of product illustration */
+            opacity: 0.9;
+        }
+
+        .silhouette {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 250px; /* Size of silhouette */
+            height: auto;
+            opacity: 0.15; /* Soft opacity */
+            z-index: 0;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .flow-container {
+                gap: 15px;
+                padding: 0 30px;
+            }
+            .step {
+                flex-basis: calc(100% / 4 - 15px); /* 4 items per row */
+            }
+            .step:not(:last-child)::after {
+                right: -20px;
+                width: 40px;
+            }
+            .step:not(:last-child)::before {
+                right: -15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5em;
+            }
+            .flow-container {
+                flex-direction: column; /* Stack steps vertically */
+                align-items: center;
+                gap: 40px; /* More space between vertical steps */
+            }
+            .step {
+                flex-basis: auto;
+                width: 80%; /* Take more width when stacked */
+                max-width: 300px;
+            }
+            .step:not(:last-child)::after,
+            .step:not(:last-child)::before {
+                content: none; /* Hide horizontal arrows */
+            }
+            /* Add vertical arrows for stacked layout */
+            .step:not(:last-child)::after {
+                content: '';
+                position: absolute;
+                bottom: -30px; /* Below the current step */
+                left: 50%;
+                transform: translateX(-50%);
+                width: 2px;
+                height: 30px; /* Vertical arrow length */
+                background: linear-gradient(to bottom, #B8860B, #DAA520);
+                opacity: 0.8;
+                z-index: 0;
+            }
+            .step:not(:last-child)::before {
+                content: '';
+                position: absolute;
+                bottom: -25px; /* Arrowhead position */
+                left: 50%;
+                transform: translateX(-50%);
+                width: 0;
+                height: 0;
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                border-top: 8px solid #DAA520; /* Arrowhead pointing down */
+                z-index: 0;
+            }
+
+            .product-illustration, .silhouette {
+                display: none; /* Hide on smaller screens */
+            }
+            .footer {
+                padding: 20px;
+            }
+            .tagline {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Sfgiandra</div>
+    </div>
+
+    <div class="title-section">
+        <h1 class="main-title">Full Life Cycle Use Case — Sfgiandra</h1>
+    </div>
+
+    <div class="flow-container">
+        <div class="step">
+            <div class="icon-circle"><img src="https://i.imgur.com/example-thinking-icon.png" alt="Need Icon"></div>
+            <div class="step-label">1. Need</div>
+            <div class="step-description">Membutuhkan hijab yang adem, lembut, dan elegan untuk aktivitas harian.</div>
+        </div>
+        <div class="step">
+            <div class="icon-circle"><img src="https://i.imgur.com/example-smartphone-icon.png" alt="Discover Icon"></div>
+            <div class="step-label">2. Discover</div>
+            <div class="step-description">Menemukan Sfgiandra lewat live, afiliasi, atau media sosial.</div>
+        </div>
+        <div class="step">
+            <div class="icon-circle"><img src="https://i.imgur.com/example-magnifier-icon.png" alt="Evaluate Icon"></div>
+            <div class="step-label">3. Evaluate</div>
+            <div class="step-description">Membandingkan bahan, warna, dan membaca ulasan produk.</div>
+        </div>
+        <div class="step">
+            <div class="icon-circle"><img src="https://i.imgur.com/example-cart-icon.png" alt="Purchase Icon"></div>
+            <div class="step-label">4. Purchase</div>
+            <div class="step-description">Membeli produk favorit seperti Pashmina Bamboo, Bergo Luna, dll.</div>
+        </div>
+        <div class="step">
+            <div class="icon-circle"><img src="https://i.imgur.com/example-hijab-woman-icon.png" alt="Use Icon"></div>
+            <div class="step-label">5. Use</div>
+            <div class="step-description">Memakai produk Sfgiandra setiap hari, merasakan bahan yang adem dan lembut.</div>
+        </div>
+        <div class="step">
+            <div class="icon-circle"><img src="https://i.imgur.com/example-megaphone-icon.png" alt="Share Icon"></div>
+            <div class="step-label">6. Share</div>
+            <div class="step-description">Membagikan pengalaman, jadi afiliasi, dan ikut kampanye live.</div>
+        </div>
+        <div class="step">
+            <div class="icon-circle"><img src="https://i.imgur.com/example-repeat-icon.png" alt="Repurchase Icon"></div>
+            <div class="step-label">7. Repurchase</div>
+            <div class="step-description">Membeli varian baru atau edisi spesial; loyalitas terbentuk.</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p class="tagline">“Dari kebutuhan hingga kepercayaan — setiap tahap perjalanan bersama Sfgiandra adalah refleksi kenyamanan, keanggunan, dan keaslian.”</p>
+        <img src="https://i.imgur.com/example-hijab-stack.png" alt="Sfgiandra Product Stack" class="product-illustration">
+    </div>
+
+    <img src="https://i.imgur.com/example-hijab-silhouette.png" alt="Hijab Woman Silhouette" class="silhouette">
+
+</body>
+</html>
