@@ -34,13 +34,13 @@ PALETTE = ["#1E7ACB", "#3795DE", "#58A9E6", "#84C4F0", "#B5E1FA"]
 def load_data():
     url = "https://raw.githubusercontent.com/inayahayudeswita/bike-sharing-dashboard/refs/heads/main/data/main_data.csv"
     df = pd.read_csv(url)
-    df['dteday'] = pd.to_datetime(df['dteday'])
-
-    day_df = df.drop_duplicates(subset=['dteday'])[['dteday', 'season', 'weathersit_x', 'cnt_x', 'Level_deman_x']]
-    hour_df = df[['dteday', 'season', 'hr', 'weathersit_y', 'cnt_y', 'Level_deman_x']]
-
-    day_df = day_df.rename(columns={'weathersit_x':'weathersit','cnt_x':'cnt','Level_deman_x':'level'})
-    hour_df = hour_df.rename(columns={'weathersit_y':'weathersit','cnt_y':'cnt','Level_deman_x':'level'})
+    df['dteday'] = pd.to_datetime(df['dteday']) 
+    
+    day_df = df.drop_duplicates(subset=['dteday'])[['dteday', 'season', 'weathersit_x', 'cnt_x']]
+    hour_df = df[['dteday', 'season', 'hr', 'weathersit_y', 'cnt_y']]
+    
+    day_df = day_df.rename(columns={'weathersit_x':'weathersit','cnt_x':'cnt'})
+    hour_df = hour_df.rename(columns={'weathersit_y':'weathersit','cnt_y':'cnt'})
 
     day_df['weekday_name'] = day_df['dteday'].dt.day_name().map(DAYNAME_MAP)
     hour_df['weekday_name'] = hour_df['dteday'].dt.day_name().map(DAYNAME_MAP)
